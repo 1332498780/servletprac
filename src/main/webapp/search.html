@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索图书</title>
+
+    <script type="text/javascript">
+        function formClick() {
+            if(searchForm.radioInput[0].checked){
+                searchForm.action="list?condition=all"
+            }else if(searchForm.radioInput[1].checked){
+                searchForm.action="list?condition=precise"
+            }else if(searchForm.radioInput[2].checked){
+                searchForm.action="list?condition=keyword"
+            }
+        }
+        function allClick() {
+            pre.style.display = "none";
+            key.style.display = "none";
+            searchForm.action="list?condition=all"
+            searchForm.submit();
+        }
+        function preciseClick() {
+            if(searchForm.radioInput[1].checked){
+                pre.style.display = "";
+                key.style.display = "none";
+            }else{
+                pre.style.display = "none";
+            }
+        }
+        function keywordClick() {
+            if(searchForm.radioInput[2].checked){
+                pre.style.display = "none";
+                key.style.display = "";
+            }else{
+                key.style.display = "none";
+            }
+        }
+    </script>
+
+</head>
+<body>
+<form action="" method="post" onclick="formClick()" name="searchForm">
+    <input type="radio" name="radioInput" onclick="allClick()">查询所有<p>
+    <input type="radio" name="radioInput" onclick="preciseClick()">精确搜索<p>
+    <table id="pre" style="display: none">
+        <tr>
+            <td>书名：</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>作者：</td>
+            <td><input type="text" name="author"></td>
+        </tr>
+    </table>
+    <input type="radio" name="radioInput" onclick="keywordClick()">关键字搜索<p>
+    <table id="key" style="display: none">
+        <tr>
+            <td>请输入关键字:</td>
+            <td><input type="text" name="keyword"></td>
+        </tr>
+    </table>
+    <input type="reset" value="重新输入" >
+    <input type="submit" value="开始搜索">
+</form>
+</body>
+</html>
