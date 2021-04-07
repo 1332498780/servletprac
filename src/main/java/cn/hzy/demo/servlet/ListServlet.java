@@ -4,9 +4,11 @@ package cn.hzy.demo.servlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.*;
@@ -21,7 +23,12 @@ public class ListServlet extends BaseServlet {
     }
 
     protected void doGet(Connection connection, HttpServletRequest req, HttpServletResponse resp) {
-
+        try {
+            resp.setContentType("text/html;charset=utf-8");
+            resp.getWriter().write("abc");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
