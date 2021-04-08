@@ -1,9 +1,13 @@
 package cn.hzy.demo.servlet;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -41,7 +45,8 @@ public abstract class BaseServlet extends HttpServlet {
         }
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(url, username, password);
+//            conn = DriverManager.getConnection(url, username, password);
+            conn = getConnection1();
             ResultSet resultSe = conn.createStatement().executeQuery("select count(*) from information_schema.schemata where schema_name='bookdb'");
             if(resultSe.next()){
                 long count = resultSe.getLong(1);
@@ -101,10 +106,8 @@ public abstract class BaseServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         Connection conn = null;
         try{
-            conn = DriverManager.getConnection(url,username,password);
+            conn = getConnection1();
             doGet(conn,request,response);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }finally {
             if(conn!=null){
                 try {
@@ -136,6 +139,28 @@ public abstract class BaseServlet extends HttpServlet {
                 }
             }
         }
+    }
+
+    private Connection getConnection(){
+        try {
+            return DriverManager.getConnection(url,username,password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Connection getConnection1(){
+        try {
+            Context context = new InitialContext();
+            DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/bookdb");
+            return dataSource.getConnection();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

@@ -42,7 +42,7 @@
 
   <servlet>
     <servlet-name>listServlet</servlet-name>
-    <servlet-class>cn.hzy.demo.servlet.CreateDbServlet</servlet-class>
+    <servlet-class>cn.hzy.demo.servlet.ListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>listServlet</servlet-name>
